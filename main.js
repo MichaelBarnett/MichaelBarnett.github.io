@@ -34,7 +34,7 @@ let previousFrameTime = 0.0;
 function animate() {
     requestAnimationFrame( animate );
 
-    DeltaSeconds = Clock.GetDelta();
+    DeltaSeconds = GlobalClock.GetDelta();
     FramesPerSecond = 1.0 / DeltaSeconds;
     cube.rotation.x += 0.01;
     cube.rotation.y += 0.01;
