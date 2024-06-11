@@ -17,23 +17,29 @@ const cube = new THREE.Mesh( geometry, material );
 scene.add( cube );
 
 // White directional light at half intensity shining from the top.
-const directionalLight = new THREE.DirectionalLight( 0xffffff, 1.0 );
+const directionalLight = new THREE.DirectionalLight( 0xffffff, 10.0 );
 const ambientLight = new THREE.AmbientLight(0x404040);
+const GlobalClock = new THREE.Clock(true); // Creates and starts a clock, yay?
 
 scene.add( directionalLight );
 //scene.add( ambientLight );
 
-scene.fog = new THREE.Fog( 0xccccff, 0, 7 );
+//scene.fog = new THREE.Fog( 0xccccff, 0, 7 );
 
 camera.position.z = 5;
 
-function animate() {
-	requestAnimationFrame( animate );
+let DeltaSeconds = 0.0;
+let previousFrameTime = 0.0;
 
+function animate() {
+    requestAnimationFrame( animate );
+
+    DeltaSeconds = Clock.GetDelta();
+    FramesPerSecond = 1.0 / DeltaSeconds;
     cube.rotation.x += 0.01;
     cube.rotation.y += 0.01;
     cube.rotation.z += 0.001;
-	
+
     renderer.render( scene, camera );
 }
 
