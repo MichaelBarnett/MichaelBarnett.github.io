@@ -18,10 +18,10 @@ scene.add( cube );
 
 // White directional light at half intensity shining from the top.
 const directionalLight = new THREE.DirectionalLight( 0xffffff, 1.0 );
-const ambientLight = new THREE.ambientLight(0x404040);
+const ambientLight = new THREE.AmbientLight(0x404040);
 
 scene.add( directionalLight );
-scene.add( ambientLight );
+//scene.add( ambientLight );
 
 scene.fog = new THREE.Fog( 0xccccff, 0, 7 );
 
