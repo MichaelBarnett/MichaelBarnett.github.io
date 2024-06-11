@@ -1,7 +1,7 @@
 
 console.log("DEBUG: JS Activated.");
 
-//import * as THREE from '/node_modules/three/build/three.module.js';
+// import * as THREE from '/node_modules/three/build/three.module.js';
 // import * as THREE from '/node_modules/three';
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js';
 
@@ -17,8 +17,11 @@ const cube = new THREE.Mesh( geometry, material );
 scene.add( cube );
 
 // White directional light at half intensity shining from the top.
-const directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
+const directionalLight = new THREE.DirectionalLight( 0xffffff, 1.0 );
+const ambientLight = new THREE.ambientLight(0x404040)
+
 scene.add( directionalLight );
+scene.add( ambientLight );
 
 scene.fog = new THREE.Fog( 0xccccff, 0, 7 );
 
