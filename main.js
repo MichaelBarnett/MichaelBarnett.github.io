@@ -5,6 +5,8 @@ console.log("DEBUG: JS Activated.");
 // import * as THREE from '/node_modules/three';
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js';
 
+import GameMode from './src/mode.js';
+
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 const scene = new THREE.Scene();
 const renderer = new THREE.WebGLRenderer();
@@ -26,6 +28,19 @@ scene.add( directionalLight );
 
 //scene.fog = new THREE.Fog( 0xccccff, 0, 7 );
 
+// Create a Text2D object
+// const text = new Text2D('Hello, Three.js!', {
+//     font: '30px Arial',
+//     fillStyle: '#ffffff',
+//     antialias: true
+// });
+
+// // Position the text
+// text.position.set(100, 100, 0);
+// scene.add( text );
+
+let MyGameMode = new GameMode(0.7);
+
 camera.position.z = 5;
 
 let DeltaSeconds = 0.0;
@@ -34,8 +49,11 @@ let previousFrameTime = 0.0;
 function animate() {
     requestAnimationFrame( animate );
 
-    DeltaSeconds = GlobalClock.GetDelta();
-    FramesPerSecond = 1.0 / DeltaSeconds;
+    const DeltaSeconds = GlobalClock.getDelta();
+    const FramesPerSecond = 1.0 / DeltaSeconds;
+
+    text.text( FramesPerSecond )
+
     cube.rotation.x += 0.01;
     cube.rotation.y += 0.01;
     cube.rotation.z += 0.001;
