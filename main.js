@@ -1,6 +1,7 @@
 
 console.log("DEBUG: JS Activated.");
 
+// There seems to be multiple ways of getting JS stuff, which is fun I suppose, including downloading and implementing at runtime, which I think is prefered.
 // import * as THREE from '/node_modules/three/build/three.module.js';
 // import * as THREE from '/node_modules/three';
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js';
@@ -44,7 +45,6 @@ let MyGameMode = new GameMode(0.7);
 camera.position.z = 5;
 
 let DeltaSeconds = 0.0;
-let previousFrameTime = 0.0;
 
 function animate() {
     requestAnimationFrame( animate );
