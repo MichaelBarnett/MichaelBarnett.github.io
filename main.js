@@ -5,8 +5,13 @@ console.log("DEBUG: JS Activated.");
 // import * as THREE from '/node_modules/three/build/three.module.js';
 // import * as THREE from '/node_modules/three';
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js';
+import {GLTFLoader} from 'https://cdn.jsdelivr.net/npm/three@0.118/examples/jsm/loaders/GLTFLoader.js';
+//import * as GLTFLoader 
+
+
 
 import GameMode from './src/mode.js';
+import DebugUI from './src/debug.js';
 
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 const scene = new THREE.Scene();
@@ -14,7 +19,7 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight);
 document.body.appendChild( renderer.domElement);
 
-const plane_geo = new THREE.BoxGeometry(100, 1, 100);
+const plane_geo = new THREE.BoxGeometry(250, 1, 250);
 const geometry = new THREE.BoxGeometry( 2, 1, 1 );
 const material = new THREE.MeshPhongMaterial( { color: 0x00ff00 } );
 const M_Water = new THREE.MeshPhongMaterial( { color: 0x004040 } );
@@ -24,6 +29,21 @@ const floor_mesh = new THREE.Mesh( plane_geo, M_Water );
 floor_mesh.castShadow = true;
 scene.add( cube );
 scene.add( floor_mesh );
+
+const loader = new GLTFLoader();
+
+let mymesh;
+
+loader.load( './resources/mesh/8ev4.glb', function ( gltf ) {
+
+    mymesh = gltf;
+	scene.add( gltf.scene );
+
+}, undefined, function ( error ) {
+
+	console.error( error );
+
+} );
 
 floor_mesh.position.y = -10;
 
@@ -41,18 +61,7 @@ const GlobalClock = new THREE.Clock(true); // Creates and starts a clock, yay?
 scene.add( directionalLight );
 //scene.add( ambientLight );
 
-var DEBUGUI = document.createElement('div');
-DEBUGUI.style.position = 'absolute';
-DEBUGUI.style.color= "white";
-DEBUGUI.style.backgroundColor = 0x000000;
-//DEBUGUI.style.zIndex = 1;    // if you still don't see the label, try uncommenting this
-DEBUGUI.style.width = 100;
-DEBUGUI.style.height = 100;
-DEBUGUI.style.backgroundColor = "black";
-DEBUGUI.innerHTML = "hi there!";
-DEBUGUI.style.top = 10 + 'px';
-DEBUGUI.style.left = 10 + 'px';
-document.body.appendChild(DEBUGUI);
+const MyDebugUI = new DebugUI(true);
 
 //scene.add( ambientLight );
 
@@ -71,7 +80,6 @@ scene.fog = new THREE.Fog( 0xccccff, 0, 50 );
 
 let MyGameMode = new GameMode();
 
-const camera_spring_arm = new THREE.Group();
 //camera_spring_arm.add( camera ) ;
 camera.position.x = 10;
 camera.position.y = 10;
@@ -79,16 +87,13 @@ camera.position.z = 10;
 camera.lookAt(new THREE.Vector3(0,0,0));
 
 let camera_direction = 0.0;
-let camera_distance = 10.0;
+let camera_distance = 30.0;
 
 function animate() {
     requestAnimationFrame( animate );
 
     const DeltaSeconds = GlobalClock.getDelta();
     const FramesPerSecond = 1.0 / DeltaSeconds;
-
-    DEBUGUI.innerHTML = "FPS: " + (FramesPerSecond).toFixed(0) + 
-                        "<br>ms: " + (1000.0*DeltaSeconds).toFixed(2);
 
     cube.rotation.x += 0.01;
     cube.rotation.y += 0.01;
@@ -103,6 +108,8 @@ function animate() {
     //camera_spring_arm.rotation.y += 0.01
 
     renderer.render( scene, camera );
+
+    MyDebugUI.update(FramesPerSecond, DeltaSeconds);
 }
 
 function toXYCoords (pos) {
