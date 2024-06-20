@@ -9,6 +9,6 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.118/build/three.mod
 export default class Actor extends Object{
     constructor(Location)
     {
-        this.Location = Location; // Three.js Vector3D.
+        this._Location = Location; // Three.js Vector3D.
     }
 }
