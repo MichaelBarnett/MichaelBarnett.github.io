@@ -8,8 +8,6 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.118/build/three.mod
 import {GLTFLoader} from 'https://cdn.jsdelivr.net/npm/three@0.118/examples/jsm/loaders/GLTFLoader.js';
 //import * as GLTFLoader 
 
-
-
 import GameMode from './src/mode.js';
 import DebugUI from './src/debug.js';
 
@@ -98,6 +96,8 @@ function animate() {
     cube.rotation.x += 0.01;
     cube.rotation.y += 0.01;
     cube.rotation.z += 0.001;
+
+    mymesh.position.z += 0.5
 
     camera_direction += 0.001
 
